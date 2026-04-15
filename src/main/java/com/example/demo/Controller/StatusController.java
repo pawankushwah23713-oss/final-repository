@@ -8,7 +8,7 @@ import com.example.demo.Repositroy.StatusRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-@CrossOrigin(origins = "http://localhost:3000") // React app URL
+@CrossOrigin("*") // React app URL
 @RestController
 @RequestMapping("/status")
 public class StatusController {

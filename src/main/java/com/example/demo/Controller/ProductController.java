@@ -20,7 +20,7 @@ import java.util.Map;
 
 import com.cloudinary.utils.ObjectUtils;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -269,4 +269,13 @@ public Product deleteProduct(@PathVariable String id, @RequestBody tempuser user
 
     return product;
 }
+// --- 🔍 Search Products ---
+@GetMapping("/search")
+public List<Product> searchProducts(@RequestParam String q) {
+
+    System.out.println("🔍 Searching products: " + q);
+
+    return productRepository.searchProducts(q);
+}
+
 }

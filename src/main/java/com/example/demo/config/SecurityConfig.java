@@ -24,6 +24,8 @@ public class SecurityConfig {
                 // 🔥 ADD THIS (MOST IMPORTANT)
                 .requestMatchers("/ws/**").permitAll() 
                 .requestMatchers("/uploads/**").permitAll()
+                .requestMatchers("/music/**").permitAll()
+                
 
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/app/**").permitAll()

@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;  
 import com.example.demo.Model.ChatMessage;
 import com.example.demo.Repositroy.ChatRepository;
-import com.example.demo.websocket.OnlineUsers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 

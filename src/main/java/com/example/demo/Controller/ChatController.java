@@ -6,7 +6,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 
 import com.example.demo.Repositroy.ChatRepository;
-import com.example.demo.websocket.OnlineUsers;
+
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.Model.TypingMessage;
+import com.example.demo.websocket.OnlineUserStore;
+
+
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000") // React app URL
+@CrossOrigin("*") // React app URL
 @RestController
 public class ChatController {
 
@@ -29,33 +32,31 @@ public class ChatController {
         this.messagingTemplate = messagingTemplate;
         this.chatRepository = chatRepository;
     }
-
-    // ✅ EXISTING CODE (UNCHANGED)
-  @MessageMapping("/chat")
+@MessageMapping("/chat")
 public void sendMessage(ChatMessage message) {
 
-    System.out.println("📨 " + message.getSender() + " → " + message.getReceiver());
+    String sender = OnlineUserStore.normalize(message.getSender());
+    String receiver = OnlineUserStore.normalize(message.getReceiver());
 
-    try {
-        // 🔥 TRY LIVE SEND
+    System.out.println("📨 " + sender + " → " + receiver);
+
+    boolean isReceiverOnline = OnlineUserStore.isOnline(receiver);
+
+    if (isReceiverOnline) {
         messagingTemplate.convertAndSendToUser(
-                message.getReceiver(),
+                receiver,
                 "/queue/messages",
                 message
         );
-
-        // ✅ assume delivered
-        message.setDelivered(true);
-        System.out.println("🔥 Sent live");
-
-    } catch (Exception e) {
-
-        // ❌ FAIL → store only
-        message.setDelivered(false);
-        System.out.println("💾 User offline, storing in DB");
+         
+        System.out.println("🔥 Delivered");
+    } else {
+        System.out.println("💾 Stored (offline)");
     }
+ 
 
-    // 💾 ALWAYS SAVE (important)
+
+    message.setDelivered(isReceiverOnline);
     chatRepository.save(message);
 }
 

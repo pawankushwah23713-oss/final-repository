@@ -18,26 +18,24 @@ public class UserInterceptor extends DefaultHandshakeHandler {
 
         if (request instanceof ServletServerHttpRequest servletRequest) {
 
-            // query string: username=pawan%40gmail.com
             String query = servletRequest.getServletRequest().getQueryString();
             String username = "anonymous";
 
             if (query != null && query.contains("username=")) {
-                // simple parsing
                 username = query.split("username=")[1];
-                // decode URL encoded value
                 username = URLDecoder.decode(username, StandardCharsets.UTF_8);
             }
 
-            System.out.println("🔥 Connected user: " + username);
+            String sessionId = servletRequest.getServletRequest().getSession().getId();
+
+            // 🔥 ADD USER HERE (NO EVENT LISTENER)
+            OnlineUserStore.addUser(username, sessionId);
+
+            System.out.println("🔥 Connected: " + username);
 
             final String finalUsername = username;
-            return new Principal() {
-                @Override
-                public String getName() {
-                    return finalUsername;
-                }
-            };
+
+            return () -> finalUsername;
         }
 
         return super.determineUser(request, wsHandler, attributes);
