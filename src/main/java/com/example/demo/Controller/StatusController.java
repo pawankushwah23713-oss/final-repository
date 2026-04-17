@@ -8,7 +8,10 @@ import com.example.demo.Repositroy.StatusRepository;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
-@CrossOrigin("*") // React app URL
+@CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
+@RestController
+public class YourController {
+}
 @RestController
 @RequestMapping("/status")
 public class StatusController {
