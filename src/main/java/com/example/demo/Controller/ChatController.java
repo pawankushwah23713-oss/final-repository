@@ -21,9 +21,7 @@ import com.example.demo.websocket.OnlineUserStore;
 import java.util.List;
 
 @CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
-@RestController
-public class YourController {
-}
+
 @RestController
 public class ChatController {
 
