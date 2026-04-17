@@ -16,37 +16,45 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-            .csrf(csrf -> csrf.disable()) 
+            .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .authorizeHttpRequests(auth -> auth
+
+                // Allow preflight requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-                // 🔥 ADD THIS (MOST IMPORTANT)
-                .requestMatchers("/ws/**").permitAll() 
+                // Public routes
+                .requestMatchers("/ws/**").permitAll()
                 .requestMatchers("/uploads/**").permitAll()
                 .requestMatchers("/music/**").permitAll()
-                
-
                 .requestMatchers("/api/**").permitAll()
                 .requestMatchers("/app/**").permitAll()
                 .requestMatchers("/status/**").permitAll()
-                
-                .anyRequest().permitAll() // 🔥 change from authenticated()
+
+                .anyRequest().permitAll()
             );
 
         return http.build();
     }
 
-    // 🔥 CORS CONFIG
+    // ✅ FIXED CORS CONFIG
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
 
         CorsConfiguration config = new CorsConfiguration();
 
-        config.setAllowedOriginPatterns(List.of("*")); // 🔥 change (important for SockJS)
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // 🔥 IMPORTANT: exact frontend URL (NO *)
+        config.setAllowedOrigins(List.of(
+            "https://finalrepositoryfrontend.netlify.app"
+        ));
+
+        config.setAllowedMethods(List.of(
+            "GET", "POST", "PUT", "DELETE", "OPTIONS"
+        ));
+
         config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+
+        config.setAllowCredentials(true); // keep true
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
