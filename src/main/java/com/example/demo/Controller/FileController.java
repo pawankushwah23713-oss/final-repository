@@ -11,9 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/file")
 @CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
-@RestController
-public class YourController {
-}
+
 public class FileController {
 
     @Autowired
