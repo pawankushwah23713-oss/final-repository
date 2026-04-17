@@ -11,7 +11,10 @@ import java.util.List;
 import com.example.demo.Model.tempuser;
 import com.example.demo.Repositroy.UserRepository;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
+@RestController
+public class YourController {
+}
 @RestController
 @RequestMapping("/api/users")
  // frontend allow
