@@ -20,7 +20,10 @@ import java.util.Map;
 
 import com.cloudinary.utils.ObjectUtils;
 
-@CrossOrigin("*")
+@CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
+@RestController
+public class YourController {
+}
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
