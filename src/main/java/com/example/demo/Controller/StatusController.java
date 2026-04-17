@@ -9,9 +9,7 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
 @CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
-@RestController
-public class YourController {
-}
+
 @RestController
 @RequestMapping("/status")
 public class StatusController {
