@@ -18,9 +18,7 @@ import com.example.demo.Repositroy.MusicRepository;
 @RestController
 @RequestMapping("/music")
 @CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
-@RestController
-public class YourController {
-}
+
 public class MusicController {
 
     @Autowired
