@@ -20,7 +20,10 @@ import com.example.demo.websocket.OnlineUserStore;
 
 import java.util.List;
 
-@CrossOrigin("*") // React app URL
+@CrossOrigin(origins = "https://finalrepositoryfrontend.netlify.app")
+@RestController
+public class YourController {
+}
 @RestController
 public class ChatController {
 
